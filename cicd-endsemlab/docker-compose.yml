@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  hospital-frontend:
+    build:
+      context: ./hospital-frontend
+      dockerfile: Dockerfile
+    container_name: hospital-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./hospital-frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host
+    networks:
+      - hospital-network
+    restart: unless-stopped
+
+networks:
+  hospital-network:
+    driver: bridge
